@@ -1,6 +1,7 @@
 from torch import nn
 import torch
 from torch.nn import Sequential
+from torch.nn.utils.rnn import pack_padded_sequence, pad_packed_sequence
 
 from hw_asr.base import BaseModel
 
@@ -14,8 +15,11 @@ class RnnModel(BaseModel):
         self.fc = nn.Linear(in_features=fc_hidden, out_features=n_class)
 
     def forward(self, spectrogram, *args, **kwargs):
-        out, _ = self.rnn(spectrogram)
+        packed_inputs = pack_padded_sequence(spectrogram, kwargs["spectrogram_length"],
+                                             enforce_sorted=False, batch_first=True)
 
+        out, _ = self.rnn(packed_inputs)
+        out, _ = pad_packed_sequence(out, batch_first=True)
         out = self.fc(out)
         return {"logits": out}
 

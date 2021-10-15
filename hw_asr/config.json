@@ -14,7 +14,7 @@
     "spectrogram": []
   },
   "arch": {
-    "type": "LstmModel",
+    "type": "RnnModel",
     "args": {
       "n_feats": 128,
       "fc_hidden": 512,
@@ -79,10 +79,10 @@
   "lr_scheduler": {
     "type": "OneCycleLR",
     "args": {
-      "steps_per_epoch": 10,
+      "steps_per_epoch": 11,
       "epochs": 100,
       "anneal_strategy": "cos",
-      "max_lr": 0.06,
+      "max_lr": 0.1,
       "pct_start": 0.2
     }
   },
@@ -92,7 +92,7 @@
     "save_period": 5,
     "verbosity": 2,
     "monitor": "min val_loss",
-    "early_stop": 100,
+    "early_stop": 120,
     "visualize": "wandb",
     "wandb_project": "asr_project",
     "len_epoch": 10,
