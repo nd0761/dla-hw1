@@ -17,7 +17,9 @@ class BaselineModel(BaseModel):
         )
 
     def forward(self, spectrogram, *args, **kwargs):
-        return {"logits": self.net(spectrogram)}
+        out = self.net(spectrogram)
+        temp = out.shape
+        return {"logits": out}
 
     def transform_input_lengths(self, input_lengths):
         return input_lengths  # we don't reduce time dimension here

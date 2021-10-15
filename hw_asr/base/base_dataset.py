@@ -15,15 +15,15 @@ logger = logging.getLogger(__name__)
 
 class BaseDataset(Dataset):
     def __init__(
-            self,
-            index,
-            text_encoder: BaseTextEncoder,
-            config_parser: ConfigParser,
-            wave_augs=None,
-            spec_augs=None,
-            limit=None,
-            max_audio_length=None,
-            max_text_length=None,
+        self,
+        index,
+        text_encoder: BaseTextEncoder,
+        config_parser: ConfigParser,
+        wave_augs=None,
+        spec_augs=None,
+        limit=None,
+        max_audio_length=None,
+        max_text_length=None,
     ):
         self.text_encoder = text_encoder
         self.config_parser = config_parser
@@ -57,12 +57,13 @@ class BaseDataset(Dataset):
         audio_path = data_dict["path"]
         audio_wave = self.load_audio(audio_path)
         audio_wave, audio_spec = self.process_wave(audio_wave)
+        text = data_dict["text"].replace("'", "")
         return {
             "audio": audio_wave,
             "spectrogram": audio_spec,
             "duration": data_dict["audio_len"],
-            "text": data_dict["text"],
-            "text_encoded": self.text_encoder.encode(data_dict["text"]),
+            "text": text,
+            "text_encoded": self.text_encoder.encode(text),
             "audio_path": audio_path,
         }
 
@@ -110,11 +111,13 @@ class BaseDataset(Dataset):
             exceeds_audio_length = False
 
         initial_size = len(index)
-        if max_audio_length is not None:
-            exceeds_text_length = np.array(
-                [
-                    len(BaseTextEncoder.normalize_text(el["text"]))
-                    for el in index]) <= max_text_length
+        if max_text_length is not None:
+            exceeds_text_length = (
+                    np.array(
+                        [len(BaseTextEncoder.normalize_text(el["text"])) for el in index]
+                    )
+                    >= max_text_length
+            )
             _total = exceeds_text_length.sum()
             logger.info(
                 f"{_total} ({_total / initial_size:.1%}) records are longer then "
