@@ -14,8 +14,7 @@ class RnnModel(BaseModel):
         self.fc = nn.Linear(in_features=fc_hidden, out_features=n_class)
 
     def forward(self, spectrogram, *args, **kwargs):
-        hidden = torch.zeros(self.n_layers, spectrogram.size(0), self.fc_hidden)
-        out, hidden = self.rnn(spectrogram, hidden)
+        out, _ = self.rnn(spectrogram)
 
         out = self.fc(out)
         return {"logits": out}

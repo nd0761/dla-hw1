@@ -209,16 +209,16 @@ class Trainer(BaseTrainer):
         # predictions = log_probs.cpu().argmax(-1)
         # pred_texts = [self.text_encoder.ctc_decode(p.tolist()) for p in predictions]
         # argmax_pred_texts = [
-        argmax_predictions = log_probs.cpu().argmax(-1)
-        argmax_predictions_texts = [
-            self.text_encoder.decode(p)[: int(l)]
-            for p, l in zip(argmax_predictions, log_probs_length)
+        argmax_inds = log_probs.cpu().argmax(-1)
+        argmax_inds = [
+            inds[: int(ind_len)]
+            for inds, ind_len in zip(argmax_inds, log_probs_length)
         ]
         # pred_texts = [self.text_encoder.ctc_decode(p) for p in argmax_pred_texts]
         # tuples = list(zip(pred_texts, text, argmax_pred_texts))
-        predicted_texts = [self.text_encoder.ctc_decode(p.tolist()[: int(l)])
-                           for p, l in zip(argmax_predictions, log_probs_length)]
-        tuples = list(zip(predicted_texts, text, argmax_predictions_texts))
+        argmax_texts_raw = [self.text_encoder.decode(inds) for inds in argmax_inds]
+        argmax_texts = [self.text_encoder.ctc_decode(inds.tolist()) for inds in argmax_inds]
+        tuples = list(zip(argmax_texts, text, argmax_texts_raw))
         shuffle(tuples)
         to_log_pred = []
         to_log_pred_raw = []
