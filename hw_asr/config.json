@@ -14,7 +14,7 @@
     "spectrogram": []
   },
   "arch": {
-    "type": "RnnModel",
+    "type": "LstmModel",
     "args": {
       "n_feats": 128,
       "fc_hidden": 512,
@@ -79,15 +79,15 @@
   "lr_scheduler": {
     "type": "OneCycleLR",
     "args": {
-      "steps_per_epoch": 27,
-      "epochs": 800,
+      "steps_per_epoch": 10,
+      "epochs": 100,
       "anneal_strategy": "cos",
       "max_lr": 0.06,
       "pct_start": 0.2
     }
   },
   "trainer": {
-    "epochs": 800,
+    "epochs": 100,
     "save_dir": "saved/",
     "save_period": 5,
     "verbosity": 2,
@@ -95,7 +95,7 @@
     "early_stop": 100,
     "visualize": "wandb",
     "wandb_project": "asr_project",
-    "len_epoch": 27,
+    "len_epoch": 10,
     "grad_norm_clip": 10
   }
 }
