@@ -17,7 +17,7 @@
     "type": "RnnModel",
     "args": {
       "n_feats": 128,
-      "fc_hidden": 512,
+      "fc_hidden": 96,
       "n_layers": 2
     }
   },
@@ -79,15 +79,15 @@
   "lr_scheduler": {
     "type": "OneCycleLR",
     "args": {
-      "steps_per_epoch": 11,
-      "epochs": 100,
+      "steps_per_epoch": 21,
+      "epochs": 130,
       "anneal_strategy": "cos",
       "max_lr": 0.1,
       "pct_start": 0.2
     }
   },
   "trainer": {
-    "epochs": 100,
+    "epochs": 130,
     "save_dir": "saved/",
     "save_period": 5,
     "verbosity": 2,
@@ -95,7 +95,7 @@
     "early_stop": 120,
     "visualize": "wandb",
     "wandb_project": "asr_project",
-    "len_epoch": 10,
+    "len_epoch": 20,
     "grad_norm_clip": 10
   }
 }
