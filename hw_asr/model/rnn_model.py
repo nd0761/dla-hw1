@@ -21,6 +21,8 @@ class RnnModel(BaseModel):
         out, _ = self.rnn(packed_inputs)
         out, _ = pad_packed_sequence(out, batch_first=True)
         out = self.fc(out)
+
+        temp = out.shape
         return {"logits": out}
 
     def transform_input_lengths(self, input_lengths):
