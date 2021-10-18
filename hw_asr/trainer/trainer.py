@@ -141,6 +141,7 @@ class Trainer(BaseTrainer):
         batch["log_probs_length"] = self.model.transform_input_lengths(
             batch["spectrogram_length"]
         )
+        temp = batch["log_probs"].shape
         batch["loss"] = self.criterion(**batch)
         if is_train:
             batch["loss"].backward()
