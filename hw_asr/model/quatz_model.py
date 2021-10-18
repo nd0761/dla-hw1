@@ -85,7 +85,7 @@ class TcsBlock(nn.Module):
 
 
 class QuartzNetModel(BaseModel):
-    def __init__(self, n_feats, n_class, repeat, *args, **kwargs):
+    def __init__(self, n_feats, n_class, repeat, tcs_repeat, *args, **kwargs):
         super().__init__(n_feats, n_class, *args, **kwargs)
         self.first_block = nn.Sequential(*init_basic_module(
             n_feats, n_feats, 1, dropout_proba=0.2
@@ -95,7 +95,7 @@ class QuartzNetModel(BaseModel):
         for _ in range(repeat):
             new_channels = current_channels * 2
             self.tcss.append(TcsBlock(
-                current_channels, new_channels, repeat=2
+                current_channels, new_channels, repeat=tcs_repeat
             ))
             current_channels = new_channels
         self.final_blocks = [

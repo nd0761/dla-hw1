@@ -14,11 +14,11 @@
     "spectrogram": []
   },
   "arch": {
-    "type": "RnnModel",
+    "type": "QuartzNetModel",
     "args": {
       "n_feats": 128,
-      "fc_hidden": 96,
-      "n_layers": 2
+      "repeat": 2,
+      "tcs_repeat": 3
     }
   },
   "data": {
