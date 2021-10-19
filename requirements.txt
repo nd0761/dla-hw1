@@ -14,3 +14,4 @@ torch_audiomentations
 editdistance
 
 wandb
+librosa

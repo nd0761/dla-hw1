@@ -20,7 +20,7 @@ class ArgmaxCERMetric(BaseMetric):
             inds[: int(ind_len)]
             for inds, ind_len in zip(predictions, log_probs_length)
         ]
-        for log_prob_vec, target_text, length in zip(predictions, text):
+        for log_prob_vec, target_text in zip(predictions, text):
             if hasattr(self.text_encoder, "ctc_decode"):
                 pred_text = self.text_encoder.ctc_decode(log_prob_vec.tolist())
             else:

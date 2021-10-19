@@ -29,7 +29,8 @@
       "repeat": 5,
       "tcs_repeat": 5,
       "output_channels": [256, 256, 256, 512, 512, 512, 512, 1024],
-      "kernels": [33, 33, 39, 51, 63, 75, 87, 1]
+      "kernels": [33, 33, 39, 51, 63, 75, 87, 1],
+      "repeat_b_block": [3, 3, 3, 3, 3]
     }
   },
   "data": {
@@ -99,7 +100,7 @@
     }
   },
   "trainer": {
-    "epochs": 130,
+    "epochs": 1,
     "save_dir": "saved/",
     "save_period": 5,
     "verbosity": 2,

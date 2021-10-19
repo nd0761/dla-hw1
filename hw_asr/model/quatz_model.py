@@ -37,6 +37,7 @@ class QuartzNetModel(BaseModel):
             self, n_feats, n_class,
             repeat, tcs_repeat,
             output_channels, kernels,
+            repeat_b_block,
             *args, **kwargs
     ):
         super().__init__(n_feats, n_class, *args, **kwargs)
@@ -48,13 +49,14 @@ class QuartzNetModel(BaseModel):
         current_channels = output_channels[0]
         self.repeat = repeat
         for i in range(repeat):
-            new_channels = output_channels[i + 1]
-            tcss_modules.append(TcsBlock(
-                current_channels, new_channels,
-                repeat=tcs_repeat, kernel_size=kernels[i + 1],
-                padding=quartz_utils.get_padding(kernels[i + 1], dilation=1)
-            ))
-            current_channels = new_channels
+            for _ in range(repeat_b_block[i]):
+                new_channels = output_channels[i + 1]
+                tcss_modules.append(TcsBlock(
+                    current_channels, new_channels,
+                    repeat=tcs_repeat, kernel_size=kernels[i + 1],
+                    padding=quartz_utils.get_padding(kernels[i + 1], dilation=1)
+                ))
+                current_channels = new_channels
 
         self.tcss = (nn.Sequential(*tcss_modules))
 
