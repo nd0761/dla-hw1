@@ -10,26 +10,8 @@
     }
   },
   "augmentations": {
-    "wave": [
-      {
-        "type": "AddNoise",
-        "args": {}
-      },
-      {
-        "type": "AddTimeStretch",
-        "args": {}
-      },
-      {
-        "type": "AddPitchShifting",
-        "args": {}
-      }
-    ],
-    "spectrogram": [
-      {
-        "type": "AddSpecAugment",
-        "args": {}
-      }
-    ]
+    "wave": [],
+    "spectrogram": []
   },
   "arch_debug": {
     "type": "RnnModel",
@@ -111,21 +93,21 @@
     "type": "OneCycleLR",
     "args": {
       "steps_per_epoch": 21,
-      "epochs": 1,
+      "epochs": 20,
       "anneal_strategy": "cos",
       "max_lr": 0.1,
       "pct_start": 0.2
     }
   },
   "trainer": {
-    "epochs": 1,
+    "epochs": 20,
     "save_dir": "saved/",
     "save_period": 5,
     "verbosity": 2,
     "monitor": "min val_loss",
     "early_stop": 120,
     "visualize": "wandb",
-    "wandb_project": "asr_project_debug",
+    "wandb_project": "asr_project",
     "len_epoch": 20,
     "grad_norm_clip": 10
   }
