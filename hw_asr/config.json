@@ -10,8 +10,26 @@
     }
   },
   "augmentations": {
-    "wave": [],
-    "spectrogram": []
+    "wave": [
+      {
+        "type": "AddNoise",
+        "args": {}
+      },
+      {
+        "type": "AddTimeStretch",
+        "args": {}
+      },
+      {
+        "type": "AddPitchShifting",
+        "args": {}
+      }
+    ],
+    "spectrogram": [
+      {
+        "type": "AddSpecAugment",
+        "args": {}
+      }
+    ]
   },
   "arch_debug": {
     "type": "RnnModel",
@@ -93,7 +111,7 @@
     "type": "OneCycleLR",
     "args": {
       "steps_per_epoch": 21,
-      "epochs": 130,
+      "epochs": 1,
       "anneal_strategy": "cos",
       "max_lr": 0.1,
       "pct_start": 0.2

@@ -41,10 +41,13 @@ class QuartzNetModel(BaseModel):
             *args, **kwargs
     ):
         super().__init__(n_feats, n_class, *args, **kwargs)
-        self.first_block = nn.Sequential(*quartz_utils.init_first_module_tsc(
+        c1_modules = quartz_utils.init_first_module_tsc(
             n_feats, 1, output_channels[0], kernels[0], stride=2,
             padding=quartz_utils.get_padding(kernels[0], dilation=1)
-        ))
+        )
+        c1_modules.append(nn.ReLU())
+        self.first_block = nn.Sequential(*c1_modules)
+
         tcss_modules = []
         current_channels = output_channels[0]
         self.repeat = repeat
@@ -60,16 +63,22 @@ class QuartzNetModel(BaseModel):
 
         self.tcss = (nn.Sequential(*tcss_modules))
 
+        c2_modules = quartz_utils.init_first_module_tsc(
+            current_channels, 1, output_channels[-2], kernels[-2],
+            dilation=2,
+            padding=quartz_utils.get_padding(kernels[-2], dilation=2)
+        )
+        c2_modules.append(nn.ReLU())
+
+        c3_modules = quartz_utils.init_first_module_tsc(
+            output_channels[-2], 1, output_channels[-1], kernels[-1],
+            padding=0
+        )
+        c3_modules.append(nn.ReLU())
+
         final_blocks_modules = [
-            nn.Sequential(*quartz_utils.init_first_module_tsc(
-                current_channels, 1, output_channels[-2], kernels[-2],
-                dilation=2,
-                padding=quartz_utils.get_padding(kernels[-2], dilation=2)
-            )),
-            nn.Sequential(*quartz_utils.init_first_module_tsc(
-                output_channels[-2], 1, output_channels[-1], kernels[-1],
-                padding=0
-            ))
+            nn.Sequential(*c2_modules),
+            nn.Sequential(*c3_modules)
         ]
         self.final_blocks = nn.Sequential(*final_blocks_modules)
 
@@ -81,22 +90,13 @@ class QuartzNetModel(BaseModel):
         spectrogram = torch.transpose(spectrogram, 1, 2)
 
         out = self.first_block(spectrogram)
-        temp2 = [out.shape]
 
         for tcs in self.tcss:
             out = tcs(out)
-            temp2.append(out.shape)
-
-        temp2.append((0, 0))
-
         for block in self.final_blocks:
             out = block(out)
-            temp2.append(out.shape)
-
-        temp2.append((0, 0))
 
         out = self.fc(out)
-        temp2.append(out.shape)
         out = torch.transpose(out, 1, 2)
         return {"logits": out}
 
