@@ -107,7 +107,7 @@
     "monitor": "min val_loss",
     "early_stop": 120,
     "visualize": "wandb",
-    "wandb_project": "asr_project",
+    "wandb_project": "asr_project_debug",
     "len_epoch": 20,
     "grad_norm_clip": 10
   }
