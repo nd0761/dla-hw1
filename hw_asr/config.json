@@ -29,8 +29,7 @@
       "repeat": 5,
       "tcs_repeat": 5,
       "output_channels": [256, 256, 256, 512, 512, 512, 512, 1024],
-      "kernels": [33, 33, 39, 51, 63, 75, 87, 1],
-      "paddings": [16, 16, 19, 25, 31, 37, 86, 0]
+      "kernels": [33, 33, 39, 51, 63, 75, 87, 1]
     }
   },
   "data": {
@@ -92,15 +91,15 @@
   "lr_scheduler": {
     "type": "OneCycleLR",
     "args": {
-      "steps_per_epoch": 1,
-      "epochs": 1,
+      "steps_per_epoch": 21,
+      "epochs": 130,
       "anneal_strategy": "cos",
       "max_lr": 0.1,
       "pct_start": 0.2
     }
   },
   "trainer": {
-    "epochs": 1,
+    "epochs": 130,
     "save_dir": "saved/",
     "save_period": 5,
     "verbosity": 2,
@@ -108,7 +107,7 @@
     "early_stop": 120,
     "visualize": "wandb",
     "wandb_project": "asr_project_debug",
-    "len_epoch": 1,
+    "len_epoch": 20,
     "grad_norm_clip": 10
   }
 }

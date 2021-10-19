@@ -1,6 +1,5 @@
 from torch import nn
 import torch
-from torch.nn import Sequential
 
 import hw_asr.model.quartz_utils as quartz_utils
 
@@ -22,7 +21,7 @@ class TcsBlock(nn.Module):
         self.model = nn.Sequential(*modules)
 
         self.residual = nn.Sequential(
-            nn.Conv1d(in_channels, out_channels, kernel_size=1, bias=False),  # pointwise
+            nn.Conv1d(in_channels, out_channels, kernel_size=(1,), bias=False),  # pointwise
             nn.BatchNorm1d(out_channels, eps=1e-3)
         )
         self.out = nn.Sequential(nn.ReLU())
@@ -38,12 +37,12 @@ class QuartzNetModel(BaseModel):
             self, n_feats, n_class,
             repeat, tcs_repeat,
             output_channels, kernels,
-            paddings,
             *args, **kwargs
     ):
         super().__init__(n_feats, n_class, *args, **kwargs)
         self.first_block = nn.Sequential(*quartz_utils.init_first_module_tsc(
-            n_feats, 1, output_channels[0], kernels[0], stride=2, padding=quartz_utils.get_padding(kernels[0], dilation=1)
+            n_feats, 1, output_channels[0], kernels[0], stride=2,
+            padding=quartz_utils.get_padding(kernels[0], dilation=1)
         ))
         tcss_modules = []
         current_channels = output_channels[0]
@@ -53,7 +52,7 @@ class QuartzNetModel(BaseModel):
             tcss_modules.append(TcsBlock(
                 current_channels, new_channels,
                 repeat=tcs_repeat, kernel_size=kernels[i + 1],
-                padding=quartz_utils.get_padding(kernels[i+1], dilation=1)
+                padding=quartz_utils.get_padding(kernels[i + 1], dilation=1)
             ))
             current_channels = new_channels
 
@@ -73,13 +72,12 @@ class QuartzNetModel(BaseModel):
         self.final_blocks = nn.Sequential(*final_blocks_modules)
 
         self.fc = nn.Sequential(
-            nn.Conv1d(output_channels[-1], n_class, kernel_size=1, dilation=2)
+            nn.Conv1d(output_channels[-1], n_class, kernel_size=(1,), dilation=(2,))
         )
 
     def forward(self, spectrogram, *args, **kwargs):
         spectrogram = torch.transpose(spectrogram, 1, 2)
 
-        temp1 = spectrogram.shape
         out = self.first_block(spectrogram)
         temp2 = [out.shape]
 
@@ -93,9 +91,11 @@ class QuartzNetModel(BaseModel):
             out = block(out)
             temp2.append(out.shape)
 
+        temp2.append((0, 0))
+
         out = self.fc(out)
+        temp2.append(out.shape)
         out = torch.transpose(out, 1, 2)
-        temp = out.shape
         return {"logits": out}
 
     def transform_input_lengths(self, input_lengths):
