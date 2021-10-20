@@ -38,7 +38,6 @@ class AddNoise(AugmentationBase):
         self.sr = sr
 
     def __call__(self, data, **kwargs):
-        print(gdown.__version__)
         noise_name = random.choice(self.noises)
         noise_path = os.path.join(self.bg_path, noise_name)
 

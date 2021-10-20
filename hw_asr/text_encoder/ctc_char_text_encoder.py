@@ -6,6 +6,7 @@ from hw_asr.text_encoder.char_text_encoder import CharTextEncoder
 
 
 class CTCCharTextEncoder(CharTextEncoder):
+    EMPTY_TOK = "^"
 
     def __init__(self, alphabet: List[str]):
         super().__init__(alphabet)
