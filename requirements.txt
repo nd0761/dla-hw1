@@ -15,3 +15,5 @@ editdistance
 
 wandb
 librosa
+gdown
+pytest-shutil
