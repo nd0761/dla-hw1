@@ -6,7 +6,7 @@ from hw_asr.text_encoder.char_text_encoder import CharTextEncoder
 
 
 class CTCCharBpeEncoder(CharTextEncoder):
-    EMPTY_TOK = "^"
+    model_id = "1lZCyXmDeKcHc3GYF16aR23r3YS8T43_Y"
 
     def __init__(self, alphabet: List[str]):
         super().__init__(alphabet)

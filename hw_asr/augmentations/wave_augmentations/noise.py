@@ -14,7 +14,7 @@ import torchaudio
 def load_noise(file_path, drive_id):
     if os.path.exists(file_path):
         return
-    os.makedirs(file_path, exist_ok=True)
+    os.makedirs(file_path)
     gdown.download(id=drive_id, output=os.path.join(file_path, "noise.zip"))
     shutil.unpack_archive(os.path.join(file_path, "noise.zip"), file_path, "zip")
     os.remove(os.path.join(file_path, "noise.zip"))
