@@ -22,7 +22,7 @@ class ArgmaxCERMetric(BaseMetric):
         ]
         for log_prob_vec, target_text in zip(predictions, text):
             if hasattr(self.text_encoder, "ctc_decode"):
-                pred_text = self.text_encoder.ctc_decode(log_prob_vec.tolist())
+                pred_text = self.text_encoder.ctc_decode(log_prob_vec)
             else:
                 pred_text = self.text_encoder.decode(log_prob_vec)
             cers.append(calc_cer(target_text, pred_text))

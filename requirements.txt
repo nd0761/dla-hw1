@@ -17,3 +17,4 @@ wandb
 librosa
 gdown~=4.2.0
 pytest-shutil
+youtokentome

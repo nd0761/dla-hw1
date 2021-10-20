@@ -23,7 +23,7 @@ def load_noise(file_path, drive_id):
 class AddNoise(AugmentationBase):
     def __init__(self, bg_path='./data/bg_noise',
                  drive_id="18l1uBmLoAYAFzqDFqdRXmfbEciz4QFjG",
-                 sr=16000, max_noise=10, min_noise=0,
+                 sr=16000, max_noise=8, min_noise=0,
                  *args, **kwargs):
         bg_path = os.path.join(".", "data", "bg_noise") # vindovs sosatb
         print("-----augmentation_with_noise")
@@ -52,7 +52,7 @@ class AddNoise(AugmentationBase):
 
         noise_level = torch.Tensor([random.uniform(self.min_level, self.max_level)])
 
-        max_noise_size = 0.8 * data.shape[0]
+        max_noise_size = 0.5 * data.shape[0]
         noise_beginning = random.randint(0, int(max_noise_size))
         noise_len = data.shape[0] - noise_beginning
         clipped_noise = noise[:noise_len]

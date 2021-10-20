@@ -18,6 +18,10 @@ class CTCCharBpeEncoder(CharTextEncoder):
         self.char2ind = {v: k for k, v in self.ind2char.items()}
 
     def ctc_decode(self, inds: List[int]) -> str:
+
+        if isinstance(inds, torch.Tensor):
+            inds = inds.tolist()
+
         result = ""
         last_char = None
         last_empty = False
@@ -38,8 +42,6 @@ class CTCCharBpeEncoder(CharTextEncoder):
         """
         Performs beam search and returns a list of pairs (hypothesis, hypothesis probability).
         """
-        if isinstance(probs, torch.Tensor):
-            probs = probs.numpy()
         assert len(probs.shape) == 2
         char_length, voc_size = probs.shape
         assert voc_size == len(self.ind2char)
