@@ -15,5 +15,5 @@ editdistance
 
 wandb
 librosa
-gdown
+gdown~=4.2.0
 pytest-shutil
