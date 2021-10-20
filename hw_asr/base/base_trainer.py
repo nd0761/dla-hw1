@@ -6,6 +6,8 @@ from numpy import inf
 from hw_asr.base import BaseModel
 from hw_asr.logger import get_visualizer
 
+import gdown
+
 
 class BaseTrainer:
     """
@@ -69,7 +71,7 @@ class BaseTrainer:
             self._train_process()
         except KeyboardInterrupt as e:
             self.logger.info("Saving model on keyboard interrupt")
-            self._save_checkpoint(self._last_epoch, save_best=False)
+            self._save_checkpoint(self._last_epoch, save_best=False, save_to_drive=True)  # save last and best models to drive
             raise e
 
     def _train_process(self):
@@ -128,7 +130,7 @@ class BaseTrainer:
             if epoch % self.save_period == 0 or best:
                 self._save_checkpoint(epoch, save_best=best, only_best=True)
 
-    def _save_checkpoint(self, epoch, save_best=False, only_best=False):
+    def _save_checkpoint(self, epoch, save_best=False, only_best=False, save_to_drive=False):
         """
         Saving checkpoints
 

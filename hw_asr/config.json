@@ -66,8 +66,7 @@
           "args": {
             "part": "train-clean-100",
             "max_audio_length": 20.0,
-            "max_text_length": 200,
-            "limit": 20
+            "max_text_length": 200
           }
         }
       ]
@@ -81,8 +80,7 @@
           "args": {
             "part": "dev-clean",
             "max_audio_length": 20.0,
-            "max_text_length": 200,
-            "limit": 20
+            "max_text_length": 200
           }
         }
       ]
@@ -115,23 +113,22 @@
   "lr_scheduler": {
     "type": "OneCycleLR",
     "args": {
-      "steps_per_epoch": 21,
-      "epochs": 1,
+      "steps_per_epoch": 1000,
+      "epochs": 1000,
       "anneal_strategy": "cos",
       "max_lr": 0.1,
       "pct_start": 0.2
     }
   },
   "trainer": {
-    "epochs": 1,
+    "epochs": 1000,
     "save_dir": "saved/",
     "save_period": 5,
     "verbosity": 2,
     "monitor": "min val_loss",
     "early_stop": 120,
     "visualize": "wandb",
-    "wandb_project": "asr_project_debug",
-    "len_epoch": 20,
+    "wandb_project": "asr_project",
     "grad_norm_clip": 10
   }
 }

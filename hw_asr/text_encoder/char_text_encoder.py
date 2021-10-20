@@ -10,6 +10,7 @@ from hw_asr.base.base_text_encoder import BaseTextEncoder
 
 
 class CharTextEncoder(BaseTextEncoder):
+    EMPTY_TOK = "^"
 
     def __init__(self, alphabet: List[str]):
         self.ind2char = {k: v for k, v in enumerate(sorted(alphabet))}
