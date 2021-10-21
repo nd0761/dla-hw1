@@ -13,7 +13,7 @@ class CharTextEncoder(BaseTextEncoder):
     EMPTY_TOK = "^"
 
     def __init__(self, alphabet: List[str]):
-        self.ind2char = {k: v for k, v in enumerate(sorted(alphabet))}
+        self.ind2char = {k: v for k, v in enumerate(alphabet)}
         self.char2ind = {v: k for k, v in self.ind2char.items()}
 
     def __len__(self):

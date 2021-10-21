@@ -5,6 +5,7 @@ import torchaudio
 
 from hw_asr.base.base_dataset import BaseDataset
 from hw_asr.text_encoder.ctc_char_text_encoder import CTCCharTextEncoder
+from hw_asr.text_encoder.ctc_char_bpe_encoder import CTCCharBpeEncoder # CHECK
 from hw_asr.utils.parse_config import ConfigParser
 
 logger = logging.getLogger(__name__)
@@ -39,7 +40,7 @@ class CustomAudioDataset(BaseDataset):
 
 
 if __name__ == "__main__":
-    text_encoder = CTCCharTextEncoder.get_simple_alphabet()
+    text_encoder = CTCCharBpeEncoder.get_simple_alphabet()
     config_parser = ConfigParser.get_default_configs()
 
     data = [

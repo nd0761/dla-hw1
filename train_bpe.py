@@ -75,7 +75,7 @@ def main(config):
 
     model_name = "bpe.model"
 
-    yttm.BPE.train(data=all_texts, vocab_size=128, model=os.path.join(model_bpe_path, model_name))
+    yttm.BPE.train(data=all_texts, vocab_size=5000, model=os.path.join(model_bpe_path, model_name))
 
 
 if __name__ == "__main__":

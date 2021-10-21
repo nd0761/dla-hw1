@@ -22,13 +22,14 @@ class CTCCharBpeEncoder(CharTextEncoder):
         self.bpe = yttm.BPE(model_path)
 
         alphabet = self.bpe.vocab()
-        alphabet = alphabet[1:]
+        alphabet[0] = self.EMPTY_TOK
+        self.vocab = alphabet
         super().__init__(alphabet)
 
     def encode(self, text) -> Tensor:
         text = self.normalize_text(text)
         try:
-            return Tensor(self.bpe.encode([text], output_type=yttm.OutputType.ID)).unsqueeze(0)
+            return Tensor(self.bpe.encode([text], output_type=yttm.OutputType.ID)).squeeze(0).squeeze(0)
         except KeyError as e:
             raise Exception(
                 f"Can't encode text '{text}'")
@@ -41,16 +42,17 @@ class CTCCharBpeEncoder(CharTextEncoder):
         last_char = None
         last_empty = False
         for ind in inds:
+            new_char = self.ind2char[ind]
             if ind == self.char2ind[self.EMPTY_TOK]:
                 last_empty = True
                 continue
             if len(result) == 0 or \
-                    last_char != self.ind2char[ind] or \
-                    (last_char == self.ind2char[ind] and last_empty):
-                last_char = self.ind2char[ind]
-                result.append(last_char)
+                    last_char != new_char or \
+                    (last_char == new_char and last_empty):
+                last_char = new_char
+                result.append(ind)
             last_empty = False
-        return self.bpe.decode(result)
+        return self.bpe.decode([result])[0]
 
     def ctc_beam_search(self, probs: torch.tensor, probs_length,
                         beam_size: int = 100) -> List[Tuple[str, float]]:
