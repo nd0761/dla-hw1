@@ -40,7 +40,7 @@ class CustomAudioDataset(BaseDataset):
 
 
 if __name__ == "__main__":
-    text_encoder = CTCCharBpeEncoder.get_simple_alphabet()
+    text_encoder = CTCCharTextEncoder.get_simple_alphabet()
     config_parser = ConfigParser.get_default_configs()
 
     data = [

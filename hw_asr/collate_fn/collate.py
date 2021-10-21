@@ -15,7 +15,10 @@ def collate_fn(dataset_items: List[dict]):
     if len(dataset_items) < 1:
         return {}
 
-    fields = ['audio', 'spectrogram', 'text_encoded']
+    # fields = ['audio', 'spectrogram', 'text_encoded']
+    fields = ['spectrogram', 'text_encoded']
+    fields_to_transfer = ['text']
+
     result_batch = {}
 
     for field in fields:
@@ -33,7 +36,7 @@ def collate_fn(dataset_items: List[dict]):
 
     for item in dataset_items:
         for field in item.keys():
-            if field in fields:
+            if field not in fields_to_transfer:
                 continue
             if field not in result_batch.keys():
                 result_batch[field] = []

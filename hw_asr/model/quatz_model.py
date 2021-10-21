@@ -45,7 +45,7 @@ class QuartzNetModel(BaseModel):
             n_feats, 1, output_channels[0], kernels[0], stride=2,
             padding=quartz_utils.get_padding(kernels[0], dilation=1)
         )
-        c1_modules.append(nn.ReLU())
+        # c1_modules.append(nn.ReLU())
         self.first_block = nn.Sequential(*c1_modules)
 
         tcss_modules = []
@@ -68,13 +68,13 @@ class QuartzNetModel(BaseModel):
             dilation=2,
             padding=quartz_utils.get_padding(kernels[-2], dilation=2)
         )
-        c2_modules.append(nn.ReLU())
+        # c2_modules.append(nn.ReLU())
 
         c3_modules = quartz_utils.init_first_module_tsc(
             output_channels[-2], 1, output_channels[-1], kernels[-1],
             padding=0
         )
-        c3_modules.append(nn.ReLU())
+        # c3_modules.append(nn.ReLU())
 
         final_blocks_modules = [
             nn.Sequential(*c2_modules),
