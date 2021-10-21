@@ -9,6 +9,7 @@ from tqdm import tqdm
 import hw_asr.model as module_model
 from hw_asr.datasets.utils import get_dataloaders
 from hw_asr.text_encoder.ctc_char_text_encoder import CTCCharTextEncoder
+from hw_asr.text_encoder.ctc_char_bpe_encoder import CTCCharBpeEncoder # CHECK
 from hw_asr.trainer import Trainer
 from hw_asr.utils import ROOT_PATH
 from hw_asr.utils.parse_config import ConfigParser
@@ -20,7 +21,7 @@ def main(config, out_file):
     logger = config.get_logger("test")
 
     # text_encoder
-    text_encoder = CTCCharTextEncoder.get_simple_alphabet()
+    text_encoder = CTCCharTextEncoder.get_simple_alphabet() # CTCCharBpeEncoder
 
     # setup data_loader instances
     dataloaders = get_dataloaders(config, text_encoder)
