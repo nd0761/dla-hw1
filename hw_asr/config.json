@@ -87,9 +87,9 @@
     }
   },
   "optimizer": {
-    "type": "SGD",
+    "type": "Adam",
     "args": {
-      "lr": 3e-4
+      "lr": 4e-3
     }
   },
   "loss": {
@@ -113,15 +113,15 @@
   "lr_scheduler": {
     "type": "OneCycleLR",
     "args": {
-      "steps_per_epoch": 1000,
-      "epochs": 1000,
+      "steps_per_epoch": 770,
+      "epochs": 30,
       "anneal_strategy": "cos",
       "max_lr": 0.1,
       "pct_start": 0.2
     }
   },
   "trainer": {
-    "epochs": 1000,
+    "epochs": 30,
     "save_dir": "saved/",
     "save_period": 5,
     "verbosity": 2,

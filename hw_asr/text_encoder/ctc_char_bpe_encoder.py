@@ -11,8 +11,7 @@ from hw_asr.text_encoder.char_text_encoder import CharTextEncoder
 
 class CTCCharBpeEncoder(CharTextEncoder):
 
-    def __init__(self, alphabet: List[str]):
-        super().__init__(alphabet)
+    def __init__(self, **kwargs):
         model_id = "1lZCyXmDeKcHc3GYF16aR23r3YS8T43_Y"
         model_path = [".", "bpe_models", "bpe.model"]
         model_path = os.path.join(*model_path)
