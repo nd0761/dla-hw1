@@ -14,7 +14,8 @@
     "data_path": [".","bpe_models", "data"],
     "json_path": [".", "data", "datasets", "librispeech", "train-clean-100_index.json"]
   },
-  "augmentations": {
+  "augmentations": {},
+  "augmentations11": {
     "wave": [
       {
         "type": "AddNoise",
@@ -36,7 +37,7 @@
       }
     ]
   },
-  "arch_debug": {
+  "arch221": {
     "type": "RnnModel",
     "args": {
       "n_feats": 128,
@@ -45,15 +46,16 @@
       "n_layers": 2
     }
   },
-  "arch_residual": {
+  "arch": {
     "type": "SpeechRecognitionModel",
     "args": {
         "n_cnn_layers": 3,
         "n_rnn_layers": 5,
-        "rnn_dim": 512
+        "rnn_dim": 512,
+        "n_feats": 128
     }
   },
-  "arch": {
+  "arch_debug2": {
     "type": "QuartzNetModel",
     "args": {
       "n_feats": 128,
@@ -74,7 +76,8 @@
           "args": {
             "part": "train-clean-100",
             "max_audio_length": 20.0,
-            "max_text_length": 200
+            "max_text_length": 200,
+            "limit":20
           }
         }
       ]
@@ -88,7 +91,8 @@
           "args": {
             "part": "dev-clean",
             "max_audio_length": 20.0,
-            "max_text_length": 200
+            "max_text_length": 200,
+            "limit":20
           }
         }
       ]
@@ -121,7 +125,7 @@
   "lr_scheduler": {
     "type": "OneCycleLR",
     "args": {
-      "steps_per_epoch": 770,
+      "steps_per_epoch": 31,
       "epochs": 30,
       "anneal_strategy": "cos",
       "max_lr": 0.1,
@@ -136,7 +140,8 @@
     "monitor": "min val_loss",
     "early_stop": 120,
     "visualize": "wandb",
-    "wandb_project": "asr_project",
-    "grad_norm_clip": 10
+    "wandb_project": "asr_project_debug",
+    "grad_norm_clip": 10,
+    "len_epoch": 30
   }
 }

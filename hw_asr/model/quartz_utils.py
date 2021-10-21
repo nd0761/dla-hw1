@@ -1,7 +1,7 @@
 from torch import nn
 
 
-def get_padding(kernel, dilation):
+def get_padding(kernel, dilation=1):
     if dilation > 1:
         return (dilation * kernel) // 2 - 1
     return kernel // 2
