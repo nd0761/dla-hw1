@@ -162,9 +162,9 @@ class Trainer(BaseTrainer):
         :param epoch: Integer, current training epoch.
         :return: A log that contains information about validation
         """
-        self.model.eval()
-        self.valid_metrics.reset()
         with torch.no_grad():
+            self.model.eval()
+            self.valid_metrics.reset()
             for batch_idx, batch in tqdm(
                     enumerate(self.valid_data_loader),
                     desc="validation",
