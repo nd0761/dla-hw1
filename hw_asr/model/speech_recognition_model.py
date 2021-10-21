@@ -91,14 +91,11 @@ class SpeechRecognitionModel(BaseModel):
 
     def forward(self, spectrogram, *args, **kwargs):
         spectrogram = spectrogram.unsqueeze(1)
-        temp=spectrogram.shape
         out = self.residual(spectrogram)
 
         sizes = out.size()
-        temp1=out.shape
         out = out.transpose(1, 2).contiguous()
         out = out.view(sizes[0], sizes[2],  sizes[1] * sizes[3])
-        temp2=out.shape
 
         out = self.bidir(out)
         return self.fc(out)
