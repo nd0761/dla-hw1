@@ -20,3 +20,4 @@ pytest-shutil
 youtokentome
 pypi-kenlm
 wget
+pyctcdecode
