@@ -30,7 +30,7 @@ def collate_fn(dataset_items: List[dict]):
             else:
                 list_items.append(item[field].squeeze(0))
             list_length.append(item[field].size()[-1])
-        padded_tensors = pad_sequence(list_items, batch_first=True)
+        padded_tensors = pad_sequence(list_items, batch_first=True, padding_value=-1)
         result_batch[field] = padded_tensors
         result_batch[field + '_length'] = torch.Tensor(list_length).long()
 
