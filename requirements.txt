@@ -19,3 +19,4 @@ gdown~=4.2.0
 pytest-shutil
 youtokentome
 pypi-kenlm
+wget
