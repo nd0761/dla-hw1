@@ -12,7 +12,7 @@ from hw_asr.text_encoder.char_text_encoder import CharTextEncoder
 class CTCCharBpeEncoder(CharTextEncoder):
 
     def __init__(self, **kwargs):
-        model_id = "1lZCyXmDeKcHc3GYF16aR23r3YS8T43_Y"
+        model_id = "1E6GbgxCMJXRBKFr0YplT80W5lr4OP38k"
         model_path = [".", "bpe_models", "bpe.model"]
         model_path = os.path.join(*model_path)
         if not os.path.exists(model_path):
