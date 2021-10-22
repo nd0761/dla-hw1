@@ -23,7 +23,7 @@ def load_noise(file_path, drive_id):
 class AddNoise(AugmentationBase):
     def __init__(self, bg_path='./data/bg_noise',
                  drive_id="18l1uBmLoAYAFzqDFqdRXmfbEciz4QFjG",
-                 sr=16000, max_noise=8, min_noise=0,
+                 sr=16000, max_noise=4, min_noise=0,
                  *args, **kwargs):
         bg_path = os.path.join(".", "data", "bg_noise") # vindovs sosatb
         print("-----augmentation_with_noise")
@@ -42,7 +42,7 @@ class AddNoise(AugmentationBase):
         noise_path = os.path.join(self.bg_path, noise_name)
 
         noise, noise_sr = torchaudio.load(noise_path)
-        noise = noise[:1, :]
+        noise = noise[0, :]
         if self.sr != noise_sr:
             noise = torchaudio.functional.resample(noise, noise_sr, self.sr)
 
@@ -53,11 +53,13 @@ class AddNoise(AugmentationBase):
 
         max_noise_size = 0.5 * data.shape[0]
         noise_beginning = random.randint(0, int(max_noise_size))
-        noise_len = data.shape[0] - noise_beginning
+        noise_len = min(len(noise), data.shape[0] - noise_beginning)
         clipped_noise = noise[:noise_len]
 
         noise_energy = torch.norm(clipped_noise)
         audio_energy = torch.norm(data)
+
         alpha = (audio_energy / noise_energy) * torch.pow(10, -noise_level / 20)
+
         data[noise_beginning:noise_beginning+noise_len] += alpha * clipped_noise
-        return torch.clamp(data, -1, 1)
+        return torch.clamp(data, -1, 1).unsqueeze(0)

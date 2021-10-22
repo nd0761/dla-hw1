@@ -14,8 +14,7 @@
     "data_path": [".","bpe_models", "data"],
     "json_path": [".", "data", "datasets", "librispeech", "train-clean-100_index.json"]
   },
-  "augmentations": {},
-  "augmentations11": {
+  "augmentations": {
     "wave": [
       {
         "type": "AddNoise",
@@ -46,7 +45,7 @@
       "n_layers": 2
     }
   },
-  "arch": {
+  "arch2": {
     "type": "SpeechRecognitionModel",
     "args": {
         "n_cnn_layers": 3,
@@ -55,7 +54,7 @@
         "n_feats": 128
     }
   },
-  "arch_debug2": {
+  "arch": {
     "type": "QuartzNetModel",
     "args": {
       "n_feats": 128,
@@ -63,7 +62,7 @@
       "tcs_repeat": 5,
       "output_channels": [256, 256, 256, 512, 512, 512, 512, 1024],
       "kernels": [33, 33, 39, 51, 63, 75, 87, 1],
-      "repeat_b_block": [3, 3, 3, 3, 3]
+      "repeat_b_block": [1, 1, 1, 1, 1]
     }
   },
   "data": {

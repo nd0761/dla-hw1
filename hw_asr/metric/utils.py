@@ -13,9 +13,10 @@ def calc_cer(target_text, predicted_text) -> float:
 
 
 def calc_wer(target_text, predicted_text) -> float:
-    if len(target_text.split(' ')) == 0 and len(predicted_text.split(' ')) == 0:
+    target_text_split, predicted_text_split = target_text.split(' '), predicted_text.split(' ')
+    if len(target_text_split) == 0 and len(predicted_text_split) == 0:
         return 0.
-    elif len(target_text.split(' ')) == 0:
+    elif len(target_text_split) == 0:
         return 1.
 
-    return float(editdistance.eval(target_text.split(' '), predicted_text.split(' '))) / len(target_text.split(' '))
+    return float(editdistance.eval(target_text_split, predicted_text_split)) / len(target_text_split)

@@ -8,7 +8,7 @@ from hw_asr.augmentations.base import AugmentationBase
 
 
 class AddSpecAugment(AugmentationBase):
-    def __init__(self, freq_mask=16, time_mask=100, *args, **kwargs):
+    def __init__(self, freq_mask=10, time_mask=50, *args, **kwargs):
 
         self.aug = Sequential(
             torchaudio.transforms.FrequencyMasking(freq_mask),

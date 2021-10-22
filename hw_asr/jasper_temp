@@ -1,0 +1,226 @@
+
+
+"arch_jasper": {
+     "type": "Jasper",
+     "args": {
+      "n_feats": 128,
+      "encoder": {
+        "init": "xavier_uniform",
+        "in_feats": 128,
+        "frame_splicing": 1,
+        "activation": "relu",
+        "use_conv_masks": true,
+        "blocks": [
+          {
+            "filters": 64,
+            "repeat": 1,
+            "kernel_size": [
+              11
+            ],
+            "stride": [
+              2
+            ],
+            "dilation": [
+              1
+            ],
+            "dropout": 0.2,
+            "residual": false
+          },
+          {
+            "filters": 64,
+            "repeat": 5,
+            "kernel_size": [
+              11
+            ],
+            "stride": [
+              1
+            ],
+            "dilation": [
+              1
+            ],
+            "dropout": 0.2,
+            "residual": true,
+            "residual_dense": true
+          },
+          {
+            "filters": 64,
+            "repeat": 5,
+            "kernel_size": [
+              11
+            ],
+            "stride": [
+              1
+            ],
+            "dilation": [
+              1
+            ],
+            "dropout": 0.2,
+            "residual": true,
+            "residual_dense": true
+          },
+          {
+            "filters": 72,
+            "repeat": 5,
+            "kernel_size": [
+              13
+            ],
+            "stride": [
+              1
+            ],
+            "dilation": [
+              1
+            ],
+            "dropout": 0.2,
+            "residual": true,
+            "residual_dense": true
+          },
+          {
+            "filters": 72,
+            "repeat": 5,
+            "kernel_size": [
+              13
+            ],
+            "stride": [
+              1
+            ],
+            "dilation": [
+              1
+            ],
+            "dropout": 0.2,
+            "residual": true,
+            "residual_dense": true
+          },
+          {
+            "filters": 96,
+            "repeat": 5,
+            "kernel_size": [
+              17
+            ],
+            "stride": [
+              1
+            ],
+            "dilation": [
+              1
+            ],
+            "dropout": 0.2,
+            "residual": true,
+            "residual_dense": true
+          },
+          {
+            "filters": 96,
+            "repeat": 5,
+            "kernel_size": [
+              17
+            ],
+            "stride": [
+              1
+            ],
+            "dilation": [
+              1
+            ],
+            "dropout": 0.2,
+            "residual": true,
+            "residual_dense": true
+          },
+          {
+            "filters": 120,
+            "repeat": 5,
+            "kernel_size": [
+              21
+            ],
+            "stride": [
+              1
+            ],
+            "dilation": [
+              1
+            ],
+            "dropout": 0.3,
+            "residual": true,
+            "residual_dense": true
+          },
+          {
+            "filters": 120,
+            "repeat": 5,
+            "kernel_size": [
+              21
+            ],
+            "stride": [
+              1
+            ],
+            "dilation": [
+              1
+            ],
+            "dropout": 0.3,
+            "residual": true,
+            "residual_dense": true
+          },
+          {
+            "filters": 144,
+            "repeat": 5,
+            "kernel_size": [
+              25
+            ],
+            "stride": [
+              1
+            ],
+            "dilation": [
+              1
+            ],
+            "dropout": 0.3,
+            "residual": true,
+            "residual_dense": true
+          },
+          {
+            "filters": 144,
+            "repeat": 5,
+            "kernel_size": [
+              25
+            ],
+            "stride": [
+              1
+            ],
+            "dilation": [
+              1
+            ],
+            "dropout": 0.3,
+            "residual": true,
+            "residual_dense": true
+          },
+          {
+            "filters": 168,
+            "repeat": 1,
+            "kernel_size": [
+              29
+            ],
+            "stride": [
+              1
+            ],
+            "dilation": [
+              2
+            ],
+            "dropout": 0.4,
+            "residual": false
+          },
+          {
+            "filters": 192,
+            "repeat": 1,
+            "kernel_size": [
+              1
+            ],
+            "stride": [
+              1
+            ],
+            "dilation": [
+              1
+            ],
+            "dropout": 0.4,
+            "residual": false
+          }
+        ]
+      },
+      "decoder": {
+        "in_feats": 192,
+        "init": "xavier_uniform"
+      }
+     }
+   },
