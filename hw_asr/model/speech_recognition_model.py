@@ -12,8 +12,8 @@ def init_residual_modules(in_channels, out_channels, kernel, stride, dropout, n_
     return [
         nn.LayerNorm(n_feats),
         nn.GELU(),
-        nn.Dropout(p=dropout),
-        nn.Conv2d(in_channels, out_channels, kernel, stride, padding=qu.get_padding(kernel))
+        nn.Conv2d(in_channels, out_channels, kernel, stride, padding=qu.get_padding(kernel)),
+        nn.Dropout(p=dropout)
     ]
 
 
@@ -31,26 +31,26 @@ class Residual(nn.Module):
         return out + x
 
 
-class Bidirectional(nn.Module):
-
-    def __init__(self, rnn_dim, hidden_size, dropout, batch_first):
-        super(Bidirectional, self).__init__()
-
-        modules = [
-            nn.LayerNorm(rnn_dim),
-            nn.GELU()
-        ]
-        self.net = nn.Sequential(*modules)
-        self.BiGRU = nn.GRU(
-            input_size=rnn_dim, hidden_size=hidden_size,
-            num_layers=1, batch_first=batch_first, bidirectional=True
-        )
-        self.dropout = nn.Dropout(dropout)
-
-    def forward(self, x):
-        out = self.net(x)
-        out, _ = self.BiGRU(out)
-        return self.dropout(out)
+# class Bidirectional(nn.Module):
+#
+#     def __init__(self, rnn_dim, hidden_size, dropout, batch_first):
+#         super(Bidirectional, self).__init__()
+#
+#         modules = [
+#             nn.LayerNorm(rnn_dim),
+#             nn.GELU()
+#         ]
+#         self.net = nn.Sequential(*modules)
+#         self.BiGRU = nn.GRU(
+#             input_size=rnn_dim, hidden_size=hidden_size,
+#             num_layers=1, batch_first=batch_first, bidirectional=True
+#         )
+#         self.dropout = nn.Dropout(dropout)
+#
+#     def forward(self, x):
+#         out = self.net(x)
+#         out, _ = self.BiGRU(out)
+#         return self.dropout(out)
 
 
 class SpeechRecognitionModel(BaseModel):
@@ -72,13 +72,13 @@ class SpeechRecognitionModel(BaseModel):
         self.residual = nn.Sequential(*residual_modules)
 
         current_channels = n_feats * 32
-        bidir_modules = [nn.Linear(current_channels, rnn_dim)]
+        bidir_modules = [
+            nn.Linear(current_channels, rnn_dim),
+            nn.GELU(),
+            nn.LSTM(rnn_dim, hidden_size=rnn_dim, bidirectional=True,
+                    num_layers=n_rnn_layers, batch_first=True)
+        ]
 
-        bidir_modules.extend([
-            Bidirectional(rnn_dim=rnn_dim if i == 0 else rnn_dim * 2,
-                          hidden_size=rnn_dim, dropout=dropout, batch_first=(i == 0))
-            for i in range(n_rnn_layers)
-        ])
         self.bidir = nn.Sequential(*bidir_modules)
         current_channels = rnn_dim * 2
 
@@ -97,7 +97,7 @@ class SpeechRecognitionModel(BaseModel):
         out = out.transpose(1, 2).contiguous()
         out = out.view(sizes[0], sizes[2],  sizes[1] * sizes[3])
 
-        out = self.bidir(out)
+        out, _ = self.bidir(out)
         return self.fc(out)
 
     def transform_input_lengths(self, input_lengths):
