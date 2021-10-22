@@ -22,8 +22,7 @@ class CTCCharBpeEncoder(CharTextEncoder):
         self.bpe = yttm.BPE(model_path)
 
         alphabet = self.bpe.vocab()
-        print(alphabet)
-        alphabet[0] = self.EMPTY_TOK
+        # alphabet[0] = self.EMPTY_TOK
         self.vocab = alphabet
         super().__init__(alphabet)
 
@@ -44,7 +43,7 @@ class CTCCharBpeEncoder(CharTextEncoder):
         last_empty = False
         for ind in inds:
             new_char = self.ind2char[ind]
-            if ind == self.char2ind[self.EMPTY_TOK]:
+            if ind == 0:
                 last_empty = True
                 continue
             if len(result) == 0 or \

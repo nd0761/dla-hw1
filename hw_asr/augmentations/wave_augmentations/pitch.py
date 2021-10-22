@@ -5,7 +5,7 @@ from torchaudio.transforms import Vol
 
 
 class AddPitchShifting(AugmentationBase):
-    def __init__(self, min_shift=0.2, max_shift=5, **kwargs):
+    def __init__(self, min_shift=0.2, max_shift=0.5, **kwargs):
         self.min_shift = min_shift
         self.max_shift = max_shift
 
