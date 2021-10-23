@@ -24,7 +24,7 @@ def collate_fn(dataset_items: List[dict]):
         list_items = []
         list_length = []
         for item in dataset_items:
-            if field == fields[1]:
+            if field == fields[0]:
                 list_items.append(torch.transpose(item[field], -1, -2).squeeze(0))
             else:
                 list_items.append(item[field].squeeze(0))

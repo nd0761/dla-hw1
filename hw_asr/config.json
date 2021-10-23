@@ -15,6 +15,7 @@
     "json_path": [".", "data", "datasets", "librispeech", "train-clean-100_index.json"]
   },
   "augmentations": {
+    "random_apply": 0.2,
     "wave": [
       {
         "type": "AddNoise",

@@ -26,6 +26,9 @@ class CTCCharBpeEncoder(CharTextEncoder):
         self.vocab = alphabet
         super().__init__(alphabet)
 
+    def init_kenlm(self):
+        pass
+
     def encode(self, text) -> Tensor:
         text = self.normalize_text(text)
         try:

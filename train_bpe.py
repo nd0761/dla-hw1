@@ -38,6 +38,7 @@ def json_to_str(librispeech_json_path, txt_whole_path):
         for datum in data:
             all_texts.append(datum["text"])
         joined_text = '\n'.join(all_texts)
+        joined_text = joined_text.lower().replace("'", "")
         with open(txt_whole_path, "w+") as text_file:
             text_file.write(joined_text)
         return txt_whole_path
