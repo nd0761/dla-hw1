@@ -26,10 +26,3 @@ class TestTextEncoder(unittest.TestCase):
     def test_beam_search(self):
         text_encoder = CTCCharTextEncoder.get_simple_alphabet()
 
-        probs1 = self.build_perfect_text_probs("bun^ny bun^ny", text_encoder)
-        probs2 = self.build_perfect_text_probs("bugz^^ bun^ny", text_encoder)
-        probs = 0.51 * probs1 + 0.49 * probs2
-
-        decoded_beams = text_encoder.ctc_beam_search(probs, beam_size=20)
-        self.assertIn(decoded_beams[0][0], "bunny bunny")
-

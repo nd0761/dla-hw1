@@ -22,7 +22,6 @@ class CTCCharBpeEncoder(CharTextEncoder):
         self.bpe = yttm.BPE(model_path)
 
         alphabet = self.bpe.vocab()
-        # alphabet[0] = self.EMPTY_TOK
         self.vocab = alphabet
         super().__init__(alphabet)
 

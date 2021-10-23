@@ -56,10 +56,12 @@ def prepare_device(n_gpu_use):
 
 
 class MetricTracker:
-    def __init__(self, *keys, writer=None):
+    def __init__(self, *keys, writer=None, decay=0.45):
         self.writer = writer
         self._data = pd.DataFrame(index=keys, columns=["total", "counts", "average"])
         self.reset()
+        self.decay = decay
+        self.first = True
 
     def reset(self):
         for col in self._data.columns:
@@ -68,9 +70,18 @@ class MetricTracker:
     def update(self, key, value, n=1):
         # if self.writer is not None:
         #     self.writer.add_scalar(key, value)
-        self._data.total[key] += value * n
-        self._data.counts[key] += n
-        self._data.average[key] = self._data.total[key] / self._data.counts[key]
+        if self.decay is None:
+            self._data.total[key] += value * n
+            self._data.counts[key] += n
+            self._data.average[key] = self._data.total[key] / self._data.counts[key]
+        else:
+            if not self.first:
+                prev_value = self._data.average[key]
+                self._data.average[key] = prev_value * self.decay + value * (1 - self.decay)
+            else:
+                self._data.average[key] = value
+            self.first = False
+
 
     def avg(self, key):
         return self._data.average[key]

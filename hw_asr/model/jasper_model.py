@@ -2,7 +2,8 @@ import torch
 import torch.nn as nn 
 import torch.nn.functional as F 
  
-from hw_asr.base import BaseModel 
+from hw_asr.base import BaseModel
+import hw_asr.model.quartz_utils as qu
  
 activations = { 
     "hardtanh": nn.Hardtanh, 

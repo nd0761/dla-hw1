@@ -6,6 +6,8 @@ import wget, gzip, shutil
 from pyctcdecode import build_ctcdecoder
 
 from hw_asr.text_encoder.char_text_encoder import CharTextEncoder
+
+
 # beam search from -> https://github.com/kensho-technologies/pyctcdecode/blob/main/tutorials/01_pipeline_nemo.ipynb
 
 
@@ -50,7 +52,6 @@ class CTCCharTextEncoder(CharTextEncoder):
         return result
 
     def prepare_kenlm(self):
-
         gz_three_gram_path = "3-gram.pruned.1e-7.arpa.gz"
         data_dir = os.path.join(*[".", "data", "librispeech_beam"])
         if not os.path.exists(data_dir):
