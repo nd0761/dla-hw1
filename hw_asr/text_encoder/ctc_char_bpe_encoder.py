@@ -13,7 +13,7 @@ class CTCCharBpeEncoder(CharTextEncoder):
 
     def __init__(self, **kwargs):
         self.EMPTY_TOK = '_'
-        model_id = "1E6GbgxCMJXRBKFr0YplT80W5lr4OP38k"
+        model_id = "1igehfoD46XM8cmAxK4oLF1Czh_pE7"
         model_path = [".", "bpe_models", "bpe.model"]
         model_path = os.path.join(*model_path)
         if not os.path.exists(model_path):

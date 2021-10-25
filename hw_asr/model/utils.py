@@ -1,4 +1,34 @@
 from torch import nn
+from hw_asr.model.masked_conv import MaskedConv1d
+
+
+activations = {
+    "hardtanh": nn.Hardtanh,
+    "relu": nn.ReLU,
+    "selu": nn.SELU,
+}
+
+
+def init_conv_bn(in_channels, out_channels, **kwargs):
+    return [MaskedConv1d(in_channels, out_channels, masked=True, **kwargs),
+            nn.BatchNorm1d(out_channels, eps=1e-3, momentum=0.1)]
+
+
+def init_act_dropout(activation, dropout=0.2):
+    return [activation, nn.Dropout(p=dropout)]
+
+
+def init_weights(m):
+    if type(m) == nn.Conv1d or type(m) == MaskedConv1d:
+            nn.init.xavier_uniform_(m.weight, gain=1.0)
+    elif type(m) == nn.BatchNorm1d:
+        if m.track_running_stats:
+            m.running_mean.zero_()
+            m.running_var.fill_(1)
+            m.num_batches_tracked.zero_()
+        if m.affine:
+            nn.init.ones_(m.weight)
+            nn.init.zeros_(m.bias)
 
 
 def get_padding(kernel, dilation=1):

@@ -29,7 +29,7 @@ def main(config):
     logger = config.get_logger("train")
 
     # text_encoder
-    text_encoder = CTCCharTextEncoder.get_simple_alphabet()
+    text_encoder = CTCCharBpeEncoder.get_simple_alphabet()
 
     # setup data_loader instances
     dataloaders = get_dataloaders(config, text_encoder)

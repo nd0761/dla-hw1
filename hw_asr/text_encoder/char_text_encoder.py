@@ -43,17 +43,11 @@ class CharTextEncoder(BaseTextEncoder):
         if not set_alphabet:
             alphabet = [""] + alphabet
         kenlm_path, unigram_list = self.prepare_kenlm()
-        if not set_alphabet:
-            self.ctc_decoder = build_ctcdecoder(
-                alphabet,
-                kenlm_path,
-                unigram_list
-            )
-        else:
-            self.ctc_decoder = build_ctcdecoder(
-                alphabet,
-                kenlm_path
-            )
+        self.ctc_decoder = build_ctcdecoder(
+            alphabet,
+            kenlm_path,
+            unigram_list
+        )
 
     def prepare_kenlm(self):
         gz_three_gram_path = "3-gram.pruned.1e-7.arpa.gz"
@@ -110,7 +104,7 @@ class CharTextEncoder(BaseTextEncoder):
     def get_simple_alphabet(cls):
         return cls(alphabet=list(ascii_lowercase + ' '))
 
-    def ctc_beam_search(self, probs: torch.tensor, beam_size: int = 100) -> List[Tuple[str, float]]:
+    def ctc_beam_search(self, probs: torch.tensor, beam_size: int = 100,  **kwargs) -> List[Tuple[str, float]]:
         """
         Performs beam search and returns a list of pairs (hypothesis, hypothesis probability).
         """
