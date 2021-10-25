@@ -13,7 +13,7 @@
     "vocab_size": 2500,
     "model_path": [".","bpe_models"],
     "data_path": [".","bpe_models", "data"],
-    "json_path": [".", "data", "datasets", "librispeech", "train-clean-100_index.json"]
+    "json_path": [".", "data", "datasets", "librispeech", "train-clean-360_index.json"]
   },
   "augmentations": {
     "random_apply": 0.2,
@@ -38,7 +38,7 @@
       }
     ]
   },
-  "arch221": {
+  "arch_rnn_model": {
     "type": "RnnModel",
     "args": {
       "n_feats": 128,
@@ -47,7 +47,7 @@
       "n_layers": 2
     }
   },
-  "arch2": {
+  "arch_deep_speech": {
     "type": "SpeechRecognitionModel",
     "args": {
         "n_cnn_layers": 3,
@@ -180,7 +180,6 @@
     "early_stop": 120,
     "visualize": "wandb",
     "wandb_project": "asr_project_debug",
-    "grad_norm_clip": 10,
-    "len_epoch": 30
+    "grad_norm_clip": 10
   }
 }

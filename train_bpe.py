@@ -25,7 +25,7 @@ def load_data(folder_path, drive_id):
     if os.path.exists(folder_path):
         return
     os.makedirs(folder_path, exist_ok=True)
-    file_name = "train-clean-100_index.json"
+    file_name = "train-clean-360_index.json"
     gdown.download(id=drive_id, output=os.path.join(folder_path, file_name))
 
 
