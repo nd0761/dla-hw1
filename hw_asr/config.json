@@ -96,7 +96,7 @@
         {
           "type": "LibrispeechDataset",
           "args": {
-            "part": "train-clean-100",
+            "part": "train-clean-360",
             "max_audio_length": 20.0,
             "max_text_length": 200,
             "limit":20
@@ -161,13 +161,14 @@
     }
   ],
   "lr_scheduler": {
-    "type": "OneCycleLR",
+    "type": "CyclicLR",
     "args": {
-      "steps_per_epoch": 31,
-      "epochs": 30,
-      "anneal_strategy": "cos",
-      "max_lr": 4e-3,
-      "pct_start": 0.2
+      "base_lr": 8e-4,
+      "max_lr": 9e-3,
+      "step_size_up": 220,
+      "step_size_down": 5,
+      "mode": "exp_range",
+      "cycle_momentum": false
     }
   },
   "trainer": {
