@@ -45,8 +45,8 @@ class JasperBlock(nn.Module):
 
             for ip in res_panes:
                 self.res.extend(qu.init_conv_bn(ip, filter, kernel_size=1))
-
-        self.out = nn.Sequential(*qu.init_act_dropout(activation, dropout))
+        out_modules = qu.init_act_dropout(activation, dropout)
+        self.out = nn.Sequential(*out_modules)
 
     def forward(self, x, lens=None):
 
@@ -93,8 +93,10 @@ class JasperEncoder(nn.Module):
                 all_residual_panes += [n_feats]
                 residual_panes = all_residual_panes
 
+
             self.layers.append(
-                JasperBlock(n_feats, filter, repeat, kernel, stride, dilation, dropout, residual, residual_panes))
+                JasperBlock(n_feats, filter, repeat, kernel, stride, dilation,
+                            dropout, encoder_activation, residual, residual_panes))
 
             n_feats = filter
 

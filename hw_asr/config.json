@@ -56,7 +56,7 @@
         "n_feats": 128
     }
   },
-  "arch": {
+  "arch_quartz": {
     "type": "QuartzNetModel",
     "args": {
       "n_feats": 128,
@@ -67,7 +67,7 @@
       "repeat_b_block": [1, 1, 1, 1, 1]
     }
   },
-  "arch_jasper": {
+  "arch": {
      "type": "Jasper",
      "args": {
         "n_feats": 128,
@@ -91,8 +91,7 @@
   "data": {
     "train": {
       "batch_size": 20,
-      "num_workers": 1,
-      "n_jobs": 1,
+      "num_workers": 5,
       "datasets": [
         {
           "type": "LibrispeechDataset",
@@ -107,8 +106,7 @@
     },
     "val": {
       "batch_size": 20,
-      "num_workers": 1,
-      "n_jobs": 1,
+      "num_workers": 5,
       "datasets": [
         {
           "type": "LibrispeechDataset",
@@ -123,7 +121,7 @@
     },
     "test": {
       "batch_size": 32,
-      "num_workers": 1,
+      "num_workers": 5,
       "n_jobs": 1,
       "datasets": [
         {
