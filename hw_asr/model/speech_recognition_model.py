@@ -3,7 +3,7 @@ import torch
 from torch.nn import Sequential
 
 from hw_asr.base import BaseModel
-import hw_asr.model.quartz_utils as qu
+import hw_asr.model.utils as qu
 import torch.nn.functional as F
 # https://arxiv.org/pdf/1603.05027.pdf
 
