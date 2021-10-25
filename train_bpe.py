@@ -46,6 +46,7 @@ def json_to_str(librispeech_json_path, txt_whole_path):
 
 def main(config):
     model_bpe_list = config.config["bpe"]["model_path"]
+    vocab_size = config.config["bpe"]["vocab_size"]
     model_bpe_path = os.path.join(*model_bpe_list)
     if not os.path.exists(model_bpe_path):
         os.makedirs(model_bpe_path)
@@ -68,7 +69,7 @@ def main(config):
 
     model_name = "bpe.model"
 
-    yttm.BPE.train(data=all_texts, vocab_size=100, model=os.path.join(model_bpe_path, model_name))
+    yttm.BPE.train(data=all_texts, vocab_size=vocab_size, model=os.path.join(model_bpe_path, model_name))
 
 
 if __name__ == "__main__":

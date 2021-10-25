@@ -12,6 +12,7 @@ from hw_asr.text_encoder.char_text_encoder import CharTextEncoder
 class CTCCharBpeEncoder(CharTextEncoder):
 
     def __init__(self, **kwargs):
+        self.EMPTY_TOK = '_'
         model_id = "1E6GbgxCMJXRBKFr0YplT80W5lr4OP38k"
         model_path = [".", "bpe_models", "bpe.model"]
         model_path = os.path.join(*model_path)
@@ -22,16 +23,12 @@ class CTCCharBpeEncoder(CharTextEncoder):
         self.bpe = yttm.BPE(model_path)
 
         alphabet = self.bpe.vocab()
-        self.vocab = alphabet
         super().__init__(alphabet)
-
-    def init_kenlm(self):
-        pass
 
     def encode(self, text) -> Tensor:
         text = self.normalize_text(text)
         try:
-            return Tensor(self.bpe.encode([text], output_type=yttm.OutputType.ID)).squeeze(0).squeeze(0)
+            return Tensor(self.bpe.encode([text], output_type=yttm.OutputType.ID))
         except KeyError as e:
             raise Exception(
                 f"Can't encode text '{text}'")
@@ -56,15 +53,15 @@ class CTCCharBpeEncoder(CharTextEncoder):
             last_empty = False
         return self.bpe.decode([result])[0]
 
-    def ctc_beam_search(self, probs: torch.tensor, probs_length,
-                        beam_size: int = 100) -> List[Tuple[str, float]]:
-        """
-        Performs beam search and returns a list of pairs (hypothesis, hypothesis probability).
-        """
-        assert len(probs.shape) == 2
-        char_length, voc_size = probs.shape
-        assert voc_size == len(self.ind2char)
-        hypos = []
-        # TODO: your code here
-        raise NotImplementedError
-        return sorted(hypos, key=lambda x: x[1], reverse=True)
+    # def ctc_beam_search(self, probs: torch.tensor, probs_length,
+    #                     beam_size: int = 100) -> List[Tuple[str, float]]:
+    #     """
+    #     Performs beam search and returns a list of pairs (hypothesis, hypothesis probability).
+    #     """
+    #     assert len(probs.shape) == 2
+    #     char_length, voc_size = probs.shape
+    #     assert voc_size == len(self.ind2char)
+    #     hypos = []
+    #     # TODO: your code here
+    #     raise NotImplementedError
+    #     return sorted(hypos, key=lambda x: x[1], reverse=True)

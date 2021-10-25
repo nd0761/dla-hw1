@@ -10,6 +10,7 @@
     }
   },
   "bpe": {
+    "vocab_size": 2500,
     "model_path": [".","bpe_models"],
     "data_path": [".","bpe_models", "data"],
     "json_path": [".", "data", "datasets", "librispeech", "train-clean-100_index.json"]

@@ -25,6 +25,10 @@ def main(config, out_file):
 
     # setup data_loader instances
     dataloaders = get_dataloaders(config, text_encoder)
+    set_alphabet = False
+    if isinstance(text_encoder, CTCCharBpeEncoder):
+        set_alphabet = True
+    text_encoder.init_kenlm(set_alphabet)
 
     # build model architecture
     model = config.init_obj(config["arch"], module_model, n_class=len(text_encoder))
