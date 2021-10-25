@@ -1,7 +1,7 @@
 from torch import nn
 import torch
 
-import hw_asr.model.quartz_utils as quartz_utils
+import hw_asr.model.utils as quartz_utils
 
 from hw_asr.base import BaseModel
 
