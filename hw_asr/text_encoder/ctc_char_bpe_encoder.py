@@ -52,16 +52,3 @@ class CTCCharBpeEncoder(CharTextEncoder):
                 result.append(ind)
             last_empty = False
         return self.bpe.decode([result])[0]
-
-    # def ctc_beam_search(self, probs: torch.tensor, probs_length,
-    #                     beam_size: int = 100) -> List[Tuple[str, float]]:
-    #     """
-    #     Performs beam search and returns a list of pairs (hypothesis, hypothesis probability).
-    #     """
-    #     assert len(probs.shape) == 2
-    #     char_length, voc_size = probs.shape
-    #     assert voc_size == len(self.ind2char)
-    #     hypos = []
-    #     # TODO: your code here
-    #     raise NotImplementedError
-    #     return sorted(hypos, key=lambda x: x[1], reverse=True)
