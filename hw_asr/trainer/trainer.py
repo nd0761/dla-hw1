@@ -236,6 +236,7 @@ class Trainer(BaseTrainer):
         spectrogram = random.choice(spectrogram_batch)
         image = PIL.Image.open(plot_spectrogram_to_buf(spectrogram.cpu().log()))
         self.writer.add_image("spectrogram", ToTensor()(image))
+        image.close()
 
     @torch.no_grad()
     def get_grad_norm(self, norm_type=2):

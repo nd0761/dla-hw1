@@ -90,7 +90,7 @@
   },
   "data": {
     "train": {
-      "batch_size": 20,
+      "batch_size": 42,
       "num_workers": 5,
       "datasets": [
         {
@@ -104,7 +104,7 @@
       ]
     },
     "val": {
-      "batch_size": 20,
+      "batch_size": 42,
       "num_workers": 5,
       "datasets": [
         {
@@ -160,23 +160,23 @@
   "lr_scheduler": {
     "type": "CyclicLR",
     "args": {
-      "base_lr": 8e-4,
-      "max_lr": 9e-3,
-      "step_size_up": 69550,
-      "step_size_down": 50,
+      "base_lr": 2e-5,
+      "max_lr": 5e-4,
+      "step_size_up": 5000,
+      "step_size_down": 100,
       "mode": "exp_range",
       "cycle_momentum": false
     }
   },
   "trainer": {
-    "epochs": 30,
+    "epochs": 700,
     "save_dir": "saved/",
     "save_period": 5,
     "verbosity": 2,
     "monitor": "min val_loss",
     "early_stop": 120,
     "visualize": "wandb",
-    "wandb_project": "asr_project_debug",
+    "wandb_project": "asr_project",
     "grad_norm_clip": 10
   }
 }

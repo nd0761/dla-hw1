@@ -44,6 +44,7 @@ class TestVisualization(unittest.TestCase):
                 "test",
                 hist
             ]
+            image.close()
 
             test_methods = [
                 "add_scalar",
