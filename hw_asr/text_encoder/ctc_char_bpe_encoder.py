@@ -13,12 +13,14 @@ class CTCCharBpeEncoder(CharTextEncoder):
 
     def __init__(self, **kwargs):
         self.EMPTY_TOK = '_'
-        model_id = "1igehfoD46XM8cmAxK4oLF1Czh_pE7"
+        model_id = "1igehfoD46XM8cmAxK4oLF1Czh_pE7-qU"
         model_path = [".", "bpe_models", "bpe.model"]
         model_path = os.path.join(*model_path)
+        model_dir = os.path.join(*model_path[:-1])
         if not os.path.exists(model_path):
-            os.makedirs(model_path)
-            gdown.download(id=model_id, output=model_path)
+            os.makedirs(model_dir, exist_ok=True)
+            bpe_model_name = gdown.download(id=model_id, output=model_path)
+            print(bpe_model_name)
 
         self.bpe = yttm.BPE(model_path)
 
