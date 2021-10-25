@@ -44,7 +44,7 @@ class JasperBlock(nn.Module):
                 self.dense_residual = False
 
             for ip in res_panes:
-                self.res.extend(qu.init_conv_bn(ip, filter, kernel_size=1))
+                self.res.append(nn.ModuleList(qu.init_conv_bn(ip, filter, kernel_size=1)))
         out_modules = qu.init_act_dropout(activation, dropout)
         self.out = nn.Sequential(*out_modules)
 
@@ -53,7 +53,10 @@ class JasperBlock(nn.Module):
         out = x[-1]
         lens_cur = lens
         for i, l in enumerate(self.conv):
-            out, lens_cur = l(out, lens_cur)
+            if isinstance(l, MaskedConv1d):
+                out, lens_cur = l(out, lens_cur)
+            else:
+                out = l(out)
 
         if self.res is not None:
             for i, layer in enumerate(self.res):
