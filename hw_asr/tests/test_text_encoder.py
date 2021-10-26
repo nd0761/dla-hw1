@@ -52,7 +52,7 @@ class TestTextEncoder(unittest.TestCase):
         probs_a = get_probs(text1, text_encoder)
         probs_b = get_probs(text2, text_encoder)
         probs = union_given_probs(0.51 * probs_a, 0.49 * probs_b)
-        decoded_beams = text_encoder.ctc_beam_search(np.array(probs), beam_size=20)
+        decoded_beams = text_encoder.ctc_beam_search(np.array(probs), beam_size=100)
         print(decoded_beams)
         self.assertIn(decoded_beams[0][0], text1)
 

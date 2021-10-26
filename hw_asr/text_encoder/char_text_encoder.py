@@ -109,7 +109,7 @@ class CharTextEncoder(BaseTextEncoder):
         Performs beam search and returns a list of pairs (hypothesis, hypothesis probability).
         """
         assert len(probs.shape) == 2
-
+        probs = probs[probs.argmax(-1) != 0]
         char_length, voc_size = probs.shape
         assert voc_size == len(self.ind2char)
         if isinstance(probs, torch.Tensor):
