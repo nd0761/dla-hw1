@@ -15,7 +15,7 @@ def collate_fn(dataset_items: List[dict]):
     if len(dataset_items) < 1:
         return {}
 
-    fields = ['spectrogram', 'text_encoded']
+    fields = ['audio', 'spectrogram', 'text_encoded']
     fields_to_transfer = ['text']
 
     result_batch = {}

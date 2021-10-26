@@ -179,6 +179,7 @@ class Trainer(BaseTrainer):
             self._log_scalars(self.valid_metrics)
             self._log_predictions(part="val", **batch)
             self._log_spectrogram(batch["spectrogram"])
+            self._log_audio(batch["audio"], batch["audio_length"])
 
         # add histogram of model parameters to the tensorboard
         for name, p in self.model.named_parameters():
@@ -194,6 +195,11 @@ class Trainer(BaseTrainer):
             current = batch_idx
             total = self.len_epoch
         return base.format(current, total, 100.0 * current / total)
+
+    def _log_audio(self, audio, audio_length):
+        audio_records = audio.shape[0]
+        ind = torch.randint(audio_records, size=(1,)).item()
+        self.writer.add_audio("audio", audio[ind, :audio_length[ind]], self.sample_rate)
 
     def _log_predictions(
             self,
