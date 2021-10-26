@@ -1,181 +1,329 @@
 {
-  "encoder_type": "char",
-  "name": "default_config",
-  "n_gpu": 1,
-  "preprocessing": {
-    "sr": 16000,
-    "spectrogram": {
-      "type": "MelSpectrogram",
-      "args": {
-      }
-    }
-  },
-  "bpe": {
-    "vocab_size": 2500,
-    "model_path": [".","bpe_models"],
-    "data_path": [".","bpe_models", "data"],
-    "json_path": [".", "dla-hw1", "data", "datasets", "librispeech", "train-clean-100_index.json"]
-  },
-  "augmentations": {
-    "random_apply": 0.2,
-    "wave": [
-      {
-        "type": "AddNoise",
-        "args": {}
-      },
-      {
-        "type": "AddTimeStretch",
-        "args": {}
-      },
-      {
-        "type": "AddPitchShifting",
-        "args": {}
-      }
-    ],
-    "spectrogram": [
-      {
-        "type": "AddSpecAugment",
-        "args": {}
-      }
-    ]
-  },
-  "arch_rnn_model": {
-    "type": "RnnModel",
-    "args": {
-      "n_feats": 128,
-      "repeat": 5,
-      "fc_hidden": 96,
-      "n_layers": 2
-    }
-  },
-  "arch": {
-    "type": "SpeechRecognitionModel",
-    "args": {
-        "n_cnn_layers": 3,
-        "n_rnn_layers": 5,
-        "rnn_dim": 512,
-        "n_feats": 128
-    }
-  },
-  "arch_quartz": {
-    "type": "QuartzNetModel",
-    "args": {
-      "n_feats": 128,
-      "repeat": 5,
-      "tcs_repeat": 5,
-      "output_channels": [256, 256, 256, 512, 512, 512, 512, 1024],
-      "kernels": [33, 33, 39, 51, 63, 75, 87, 1],
-      "repeat_b_block": [1, 1, 1, 1, 1]
-    }
-  },
-  "arch_jasper": {
-     "type": "Jasper",
-     "args": {
-        "n_feats": 128,
-        "encoder": {
-          "n_feats": 128,
-          "activation": "relu",
-          "filters":      [96,96, 96, 108,108,144,144,180,180,216,216,216,288],
-          "repeat_block": [1, 5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  1,  1],
-          "kernels":      [11,11, 11, 13, 13, 17, 17, 21, 21, 25, 25, 29, 1],
-          "strides":      [2, 1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1],
-          "dilations":    [1, 1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  2,  1],
-          "dropouts":     [0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.3,0.3,0.3,0.3,0.4,0.4],
-          "residuals":    [false, true, true, true, true, true, true, true, true, true, true, false, false],
-          "denses":        [false, true, true, true, true, true, true, true, true, true, true, false, false]
+    "encoder_type": "char","name": "default_config",
+    "n_gpu": 1,
+    "preprocessing": {
+        "sr": 16000,
+        "spectrogram": {
+            "type": "MelSpectrogram",
+            "args": {}
+        }
+    },
+    "bpe": {
+        "vocab_size": 2500,
+        "model_path": [
+            ".",
+            "bpe_models"
+        ],
+        "data_path": [
+            ".",
+            "bpe_models",
+            "data"
+        ],
+        "json_path": [
+            ".",
+            "dla-hw1",
+            "data",
+            "datasets",
+            "librispeech",
+            "train-clean-360_index.json"
+        ]
+    },
+    "augmentations": {
+        "random_apply": 0.2,
+        "wave": [
+            {
+                "type": "AddNoise",
+                "args": {}
+            },
+            {
+                "type": "AddTimeStretch",
+                "args": {}
+            },
+            {
+                "type": "AddPitchShifting",
+                "args": {}
+            }
+        ],
+        "spectrogram": [
+            {
+                "type": "AddSpecAugment",
+                "args": {}
+            }
+        ]
+    },
+    "arch_rnn_model": {
+        "type": "RnnModel",
+        "args": {
+            "n_feats": 128,
+            "repeat": 5,
+            "fc_hidden": 96,
+            "n_layers": 2
+        }
+    },
+    "arch": {
+        "type": "SpeechRecognitionModel",
+        "args": {
+            "n_cnn_layers": 3,
+            "n_rnn_layers": 5,
+            "rnn_dim": 512,
+            "n_feats": 128
+        }
+    },
+    "arch_quartz": {
+        "type": "QuartzNetModel",
+        "args": {
+            "n_feats": 128,
+            "repeat": 5,
+            "tcs_repeat": 5,
+            "output_channels": [
+                256,
+                256,
+                256,
+                512,
+                512,
+                512,
+                512,
+                1024
+            ],
+            "kernels": [
+                33,
+                33,
+                39,
+                51,
+                63,
+                75,
+                87,
+                1
+            ],
+            "repeat_b_block": [
+                1,
+                1,
+                1,
+                1,
+                1
+            ]
+        }
+    },
+    "arch_jasper": {
+        "type": "Jasper",
+        "args": {
+            "n_feats": 128,
+            "encoder": {
+                "n_feats": 128,
+                "activation": "relu",
+                "filters": [
+                    96,
+                    96,
+                    96,
+                    108,
+                    108,
+                    144,
+                    144,
+                    180,
+                    180,
+                    216,
+                    216,
+                    216,
+                    288
+                ],
+                "repeat_block": [
+                    1,
+                    5,
+                    5,
+                    5,
+                    5,
+                    5,
+                    5,
+                    5,
+                    5,
+                    5,
+                    5,
+                    1,
+                    1
+                ],
+                "kernels": [
+                    11,
+                    11,
+                    11,
+                    13,
+                    13,
+                    17,
+                    17,
+                    21,
+                    21,
+                    25,
+                    25,
+                    29,
+                    1
+                ],
+                "strides": [
+                    2,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
+                ],
+                "dilations": [
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    2,
+                    1
+                ],
+                "dropouts": [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.4,
+                    0.4
+                ],
+                "residuals": [
+                    false,
+                    true,
+                    true,
+                    true,
+                    true,
+                    true,
+                    true,
+                    true,
+                    true,
+                    true,
+                    true,
+                    false,
+                    false
+                ],
+                "denses": [
+                    false,
+                    true,
+                    true,
+                    true,
+                    true,
+                    true,
+                    true,
+                    true,
+                    true,
+                    true,
+                    true,
+                    false,
+                    false
+                ]
+            },
+            "decoder": {
+                "n_feats": 288
+            }
+        }
+    },
+    "data": {
+        "train": {
+            "batch_size": 20,
+            "num_workers": 5,
+            "datasets": [
+                {
+                    "type": "LibrispeechDataset",
+                    "args": {
+                        "part": "train-clean-360",
+                        "max_audio_length": 20.0,
+                        "max_text_length": 200
+                    }
+                }
+            ]
         },
-        "decoder": {
-          "n_feats": 288
+        "val": {
+            "batch_size": 20,
+            "num_workers": 5,
+            "datasets": [
+                {
+                    "type": "LibrispeechDataset",
+                    "args": {
+                        "part": "dev-clean",
+                        "max_audio_length": 20.0,
+                        "max_text_length": 200
+                    }
+                }
+            ]
+        },
+        "test": {
+            "batch_size": 32,
+            "num_workers": 5,
+            "n_jobs": 1,
+            "datasets": [
+                {
+                    "type": "LibrispeechDataset",
+                    "args": {
+                        "part": "test-clean",
+                        "max_audio_length": 20.0,
+                        "max_text_length": 200
+                    }
+                }
+            ]
         }
-      }
-  },
-  "data": {
-    "train": {
-      "batch_size": 20,
-      "num_workers": 5,
-      "datasets": [
-        {
-          "type": "LibrispeechDataset",
-          "args": {
-            "part": "train-clean-100",
-            "max_audio_length": 20.0,
-            "max_text_length": 200
-          }
-        }
-      ]
     },
-    "val": {
-      "batch_size": 20,
-      "num_workers": 5,
-      "datasets": [
-        {
-          "type": "LibrispeechDataset",
-          "args": {
-            "part": "dev-clean",
-            "max_audio_length": 20.0,
-            "max_text_length": 200
-          }
+    "optimizer": {
+        "type": "Adam",
+        "args": {
+            "lr": 0.004
         }
-      ]
     },
-    "test": {
-      "batch_size": 32,
-      "num_workers": 5,
-      "jobs": 1,
-      "datasets": [
+    "loss": {
+        "type": "CTCLoss",
+        "args": {}
+    },
+    "metrics": [
         {
-          "type": "LibrispeechDataset",
-          "args": {
-              "part": "test-clean",
-              "max_audio_length": 20.0,
-              "max_text_length": 200
-          }
+            "type": "ArgmaxWERMetric",
+            "args": {
+                "name": "WER (argmax)"
+            }
+        },
+        {
+            "type": "ArgmaxCERMetric",
+            "args": {
+                "name": "CER (argmax)"
+            }
         }
-      ]
-    }
-  },
-  "optimizer": {
-    "type": "Adam",
-    "args": {
-      "lr": 4e-3
-    }
-  },
-  "loss": {
-    "type": "CTCLoss",
-    "args": {}
-  },
-  "metrics": [
-    {
-      "type": "ArgmaxWERMetric",
-      "args": {
-        "name": "WER (argmax)"
-      }
+    ],
+    "lr_scheduler": {
+        "type": "OneCycleLR",
+        "args": {
+            "steps_per_epoch": 2300,
+            "epochs": 700,
+            "anneal_strategy": "linear",
+            "max_lr": 0.0005
+        }
     },
-    {
-      "type": "ArgmaxCERMetric",
-      "args": {
-        "name": "CER (argmax)"
-      }
+    "trainer": {
+        "epochs": 700,
+        "save_dir": "saved/",
+        "save_period": 5,
+        "verbosity": 2,
+        "monitor": "min val_loss",
+        "early_stop": 120,
+        "visualize": "wandb",
+        "wandb_project": "asr_project",
+        "grad_norm_clip": 10
     }
-  ],
-  "lr_scheduler": {
-      "type": "OneCycleLR",
-      "args": {
-          "steps_per_epoch": 2300,
-          "epochs": 700,
-          "anneal_strategy": "linear",
-          "max_lr": 0.0005
-      }
-  },
-  "trainer": {
-    "epochs": 700,
-    "save_dir": "saved/",
-    "save_period": 5,
-    "verbosity": 2,
-    "monitor": "min val_loss",
-    "early_stop": 120,
-    "visualize": "wandb",
-    "wandb_project": "asr_project",
-    "grad_norm_clip": 10
-  }
 }
