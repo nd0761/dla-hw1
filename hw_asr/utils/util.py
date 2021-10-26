@@ -82,7 +82,6 @@ class MetricTracker:
                 self._data.average[key] = value
             self.first = False
 
-
     def avg(self, key):
         return self._data.average[key]
 
