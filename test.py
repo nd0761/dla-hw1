@@ -21,7 +21,9 @@ def main(config, out_file):
     logger = config.get_logger("test")
 
     # text_encoder
-    text_encoder = CTCCharTextEncoder.get_simple_alphabet() # CTCCharBpeEncoder
+    text_encoder = CTCCharTextEncoder.get_simple_alphabet()
+    if "encoder_type" in config.config and config.config["encoder_type"] == "bpe":
+        text_encoder = CTCCharBpeEncoder.get_simple_alphabet()
 
     # setup data_loader instances
     dataloaders = get_dataloaders(config, text_encoder)

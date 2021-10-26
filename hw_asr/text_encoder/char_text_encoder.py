@@ -110,6 +110,7 @@ class CharTextEncoder(BaseTextEncoder):
         """
         assert len(probs.shape) == 2
         probs = probs[probs.argmax(-1) != 0]
+        # probs = probs[probs[:, 1:].max(-1).values > 1e-2]
         char_length, voc_size = probs.shape
         assert voc_size == len(self.ind2char)
         if isinstance(probs, torch.Tensor):

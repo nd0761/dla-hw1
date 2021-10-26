@@ -1,4 +1,5 @@
 {
+  "encoder_type": "char",
   "name": "default_config",
   "n_gpu": 1,
   "preprocessing": {
@@ -13,7 +14,7 @@
     "vocab_size": 2500,
     "model_path": [".","bpe_models"],
     "data_path": [".","bpe_models", "data"],
-    "json_path": [".", "dla-hw1", "data", "datasets", "librispeech", "train-clean-360_index.json"]
+    "json_path": [".", "dla-hw1", "data", "datasets", "librispeech", "train-clean-100_index.json"]
   },
   "augmentations": {
     "random_apply": 0.2,
@@ -96,7 +97,7 @@
         {
           "type": "LibrispeechDataset",
           "args": {
-            "part": "train-clean-360",
+            "part": "train-clean-100",
             "max_audio_length": 20.0,
             "max_text_length": 200
           }
