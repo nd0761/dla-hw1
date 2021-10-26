@@ -97,8 +97,10 @@ class LibrispeechDataset(BaseDataset):
 
 
 if __name__ == "__main__":
-    text_encoder = CTCCharBpeEncoder.get_simple_alphabet()
     config_parser = ConfigParser.get_default_configs()
+    text_encoder = CTCCharTextEncoder.get_simple_alphabet()
+    if "encoder_type" in config_parser.config and config_parser.config["encoder_type"] == "bpe":
+        text_encoder = CTCCharBpeEncoder.get_simple_alphabet()
 
     ds = LibrispeechDataset(
         "dev-clean", text_encoder=text_encoder, config_parser=config_parser
